@@ -1,4 +1,4 @@
-export default class EscPosEncoder {
+export default class EscPosEncoderIonic {
   /**
    * Initialize the printer
    *

@@ -7,13 +7,13 @@ This is ionic friendly, which mean you can use this for your ionic project too!
 
 First, install the package using npm:
 
-    npm install esc-pos-encoder-ionic --save
+    npm install @itcomhk/esc-pos-encoder-ionic --save
 
 Then, require the package and use it like so:
 
-    let EscPosEncoder = require('esc-pos-encoder');
+    let EscPosEncoderIonic = require('esc-pos-encoder-ionic');
 
-    let encoder = new EscPosEncoder();
+    let encoder = new EscPosEncoderIonic();
 
     let result = encoder
         .initialize()
@@ -24,17 +24,17 @@ Then, require the package and use it like so:
 
 All commands can be chained, except for `encode()` which will return the result as an Uint8Array which contains all the bytes that need to be send to the printer.
 
-You can reuse the instantiated `EscPosEncoder` class to generate multiple commands or sets of commands for the same printer. It will remember settings like code page, so you don't have to specify that on subsequent use. That does rely on that previous commands were actually send to the printer. 
+You can reuse the instantiated `EscPosEncoderIonic` class to generate multiple commands or sets of commands for the same printer. It will remember settings like code page, so you don't have to specify that on subsequent use. That does rely on that previous commands were actually send to the printer. 
 
 ## Usage (Ionic)
 
 On the page that you want to have the encoder, type this
 
-    import EscPosEncoder from 'esc-pos-encoder-ionic';
+    import EscPosEncoderIonic from 'esc-pos-encoder-ionic';
     
 Then inside the class method, you can access it by using:
 
-    const encoder = new EscPosEncoder();
+    const encoder = new EscPosEncoderIonic();
 
 
 The following commands are available:
