@@ -261,7 +261,7 @@ class EscPosEncoderIonic {
 		return this;
 	}
 
-   /**
+	/**
 	 * Change text size
 	 *
 	 * @param  {string}          value   small or normal

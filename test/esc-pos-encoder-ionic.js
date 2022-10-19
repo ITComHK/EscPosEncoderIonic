@@ -1,4 +1,4 @@
-const EscPosEncoder = require ('../src/esc-pos-encoder');
+const EscPosEncoderIonic = require ('../src/esc-pos-encoder-ionic');
 const { createCanvas } = require('canvas');
 
 const chai = require('chai');  
@@ -8,7 +8,7 @@ const should = chai.should();
 
 
 describe('EscPosEncoder', function() {
-    let encoder = new EscPosEncoder();
+    let encoder = new EscPosEncoderIonic();
 
     describe('text(hello)', function () {
         let result = encoder.text('hello').encode();
