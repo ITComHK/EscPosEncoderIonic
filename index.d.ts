@@ -170,4 +170,17 @@ export default class EscPosEncoderIonic {
    *
    */
   encode(): any;
+
+  /**
+   * Insert a table
+   *
+   * @param  {array}           columns  The column definitions
+   * @param  {array}           data     Array containing rows. Each row is an array containing cells.
+   *                                    Each cell can be a string value, or a callback function.
+   *                                    The first parameter of the callback is the encoder object on
+   *                                    which the function can call its methods.
+   * @return {object}                   Return the object, for easy chaining commands
+   *
+   */
+  table(columns: any[], data: any[]): any;
 }
