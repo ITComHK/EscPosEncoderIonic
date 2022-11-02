@@ -717,4 +717,4 @@ class EscPosEncoderIonic {
   }
 }
 
-module.exports = EscPosEncoder;
+module.exports = EscPosEncoderIonic;
