@@ -23,7 +23,7 @@ class EscPosEncoderIonic {
 	*/
 	_reset() {
 		this._buffer = [];
-		this._codepage = 'ascii';
+		this._codepage = 'cp936';	//ascii
 
 		this._state = {
 			'bold': false,
@@ -52,6 +52,16 @@ class EscPosEncoderIonic {
 	*/
 	_queue(value) {
 		value.forEach((item) => this._buffer.push(item));
+	}
+
+	/**
+	 * Get actural string length
+	 * 
+	 * @param {string} str 
+	 * @returns {number}
+	 */
+	_strLength(str) {
+		return str.replace(/[\u0391-\uFFE5]/g, "aa" ).length;
 	}
 
 	/**
@@ -628,8 +638,38 @@ class EscPosEncoderIonic {
       for (let c = 0; c < columns.length; c++) {
         const cell = [];
 
-        if (typeof data[r][c] === 'string') {
-          const w = linewrap(columns[c].width, { lineBreak: '\n' });
+        if (Array.isArray(data[r][c])) {
+					let w;
+					const colData = data[r][c];
+					if (colData.length == 2 && colData[1] > 0) {
+						const cw = columns[c].width/2;
+						w = linewrap(cw, { lineBreak: '\n', mode: 'hard' });
+					}
+					else {
+						w = linewrap(columns[c].width, { lineBreak: '\n' });
+					}
+          const fragments = w(colData[0]).split('\n');
+
+          for (let f = 0; f < fragments.length; f++) {
+						const content = fragments[f];
+						const str_length = this._strLength(content);
+						const pad_length = columns[c].width - str_length + content.length;
+            if (columns[c].align == 'right') {
+              cell[f] = this._encode(content.padStart(pad_length));
+            } else {
+              cell[f] = this._encode(content.padEnd(pad_length));
+            }
+          }
+        }
+        else if (typeof data[r][c] === 'string') {
+					let w;
+					if (columns[c].hanzi) {
+						const cw = columns[c].width/2;
+						w = linewrap(cw, { lineBreak: '\n', mode: 'hard' });
+					}
+					else {
+						w = linewrap(columns[c].width, { lineBreak: '\n' });
+					}
           const fragments = w(data[r][c]).split('\n');
 
           for (let f = 0; f < fragments.length; f++) {
@@ -642,7 +682,7 @@ class EscPosEncoderIonic {
         }
 
         if (typeof data[r][c] === 'function') {
-          const columnEncoder = new EscPosEncoder(
+          const columnEncoder = new EscPosEncoderIonic(
             Object.assign({}, this._options, {
               width: columns[c].width,
               embedded: true
