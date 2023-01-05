@@ -274,12 +274,18 @@ class EscPosEncoderIonic {
 	/**
 	 * Change text size
 	 *
-	 * @param  {string}          value   small or normal
+	 * @param  {string}          value   normal, small, tall, fat, large
 	 * @return {object}                  Return the object, for easy chaining commands
 	 *
 	 */
 	size(value) {
-		if (value === 'small') {
+		if (value === 'large') {
+			value = 0x30;
+		}
+		else if (value === 'fat') {
+			value = 0x10;
+		}
+		else if (value === 'small') {
 			value = 0x01;
 		} else {
 			value = 0x00;
@@ -332,7 +338,7 @@ class EscPosEncoderIonic {
 			'upce': 0x01,
 			'ean13': 0x02,
 			'ean8': 0x03,
-			'coda39': 0x04,
+			'code39': 0x04,
 			'itf': 0x05,
 			'codabar': 0x06,
 		};
@@ -663,13 +669,7 @@ class EscPosEncoderIonic {
         }
         else if (typeof data[r][c] === 'string') {
 					let w;
-					if (columns[c].hanzi) {
-						const cw = columns[c].width/2;
-						w = linewrap(cw, { lineBreak: '\n', mode: 'hard' });
-					}
-					else {
-						w = linewrap(columns[c].width, { lineBreak: '\n' });
-					}
+					w = linewrap(columns[c].width, { lineBreak: '\n' });
           const fragments = w(data[r][c]).split('\n');
 
           for (let f = 0; f < fragments.length; f++) {
